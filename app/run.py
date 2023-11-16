@@ -5,7 +5,7 @@ from config import settings
 
 
 # import handlers
-from handlers import greeting_handler
+from handlers import voice_handler
 
 
 # Remember to use your own values from my.telegram.org!
@@ -22,7 +22,9 @@ def register_handlers() -> None:
     Registers handlers
     """
 
-    client.add_event_handler(greeting_handler.hello_handler)
+    client.add_event_handler(voice_handler.handle_outgoing_voices)
+    client.add_event_handler(voice_handler.handle_incoming_voices)
+    
 
 
 register_handlers()
