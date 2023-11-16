@@ -1,6 +1,6 @@
 from telethon import events
 from telethon.types import Message, User, Channel
-from telethon import TelegramClient
+# from telethon import TelegramClient
 
 import ffmpeg
 import speech_recognition as sr
@@ -83,7 +83,7 @@ async def handle_outgoing_voices(event) -> None:
 @events.register(events.MessageEdited(incoming=True))
 async def handle_incoming_voices(event) -> None:
     """
-    handles incoming voices 
+    handles incoming voices
     if like them
     convert
     """
@@ -100,17 +100,12 @@ async def handle_incoming_voices(event) -> None:
 
     sender = await event.get_sender()
 
-    
-
     # message is audio
     if message.media and message.file.mime_type.startswith("audio"):
-
         if message.reactions.results:
-            reacted_emoji: str = message.reactions\
-                                .results[0].reaction.emoticon
+            reacted_emoji: str = message.reactions.results[0].reaction.emoticon
 
             if reacted_emoji == accepted_emoji:
-                
                 first_name: str = "said"
 
                 # get sender if is user
@@ -118,7 +113,7 @@ async def handle_incoming_voices(event) -> None:
                     first_name: str | None = sender.first_name
                 elif isinstance(sender, Channel):
                     first_name: str = sender.title
-                
+
                 await message.download_media(input_voice)
 
                 transcript: str = voice_to_text(input_path, output_path)

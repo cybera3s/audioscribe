@@ -24,7 +24,6 @@ def register_handlers() -> None:
 
     client.add_event_handler(voice_handler.handle_outgoing_voices)
     client.add_event_handler(voice_handler.handle_incoming_voices)
-    
 
 
 register_handlers()

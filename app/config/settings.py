@@ -15,4 +15,3 @@ env.read_env(path=dotenv_path)
 api_id = env.int("API_ID")
 api_hash = env.str("API_HASH")
 session_name = env.str("SESSION_NAME")
-
