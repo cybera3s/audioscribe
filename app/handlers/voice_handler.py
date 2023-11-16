@@ -5,6 +5,11 @@ from telethon.types import Message, User, Channel
 import ffmpeg
 import speech_recognition as sr
 from pathlib import Path
+import logging
+
+
+logger = logging.getLogger(__name__)
+
 
 LANG: str = "fa"
 AUDIO_FOLDER = Path("")
@@ -70,6 +75,9 @@ async def handle_outgoing_voices(event) -> None:
 
     # message is audio
     if message.media and message.file.mime_type.startswith("audio"):
+        
+        logger.info("incoming voice")
+
         sender = await event.get_sender()
         first_name = sender.first_name
         await message.download_media(input_voice)
