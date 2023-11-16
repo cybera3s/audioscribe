@@ -1,5 +1,6 @@
 from telethon import events
 from telethon.types import Message, User, Channel
+
 # from telethon import TelegramClient
 
 import ffmpeg
@@ -7,6 +8,10 @@ import speech_recognition as sr
 from pathlib import Path
 import logging
 
+logging.basicConfig(
+    filemode="a",
+    filename="/home/ario/management/logs/audioscribe/audioscribe.out.log",
+)
 
 logger = logging.getLogger(__name__)
 
@@ -75,7 +80,6 @@ async def handle_outgoing_voices(event) -> None:
 
     # message is audio
     if message.media and message.file.mime_type.startswith("audio"):
-        
         logger.info("incoming voice")
 
         sender = await event.get_sender()
