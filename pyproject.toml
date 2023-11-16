@@ -1,0 +1,30 @@
+[tool.poetry]
+name = "telethon_template"
+version = "0.1.0"
+description = "telethon template"
+authors = ["ario <cybera.3s@gmail.com>"]
+readme = "README.md"
+
+
+[tool.poetry.dependencies]
+python = "^3.10"
+environs = "^9.5.0"
+telethon = "^1.31.0"
+
+
+[tool.poetry.group.dev.dependencies]
+black = "^23.9.1"
+flake8 = "^6.1.0"
+
+
+[tool.poetry.group.test.dependencies]
+pytest = "^7.4.2"
+pytest-asyncio = "^0.21.1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+
+[tool.black]
+line-length = 79

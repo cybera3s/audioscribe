@@ -1,0 +1,27 @@
+.venv
+venv
+__pycache__
+
+*.egg-info/
+*.eggs/
+dist/
+build/
+.tox/
+.pytest_cache/
+*.egg-info
+.coverage
+htmlcov/
+*.log
+*.tar.gz
+
+
+# IDE
+.vscode
+.idea
+
+*.db
+.env
+
+# telethon
+*.session
+*.session*
