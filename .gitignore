@@ -25,3 +25,7 @@ htmlcov/
 # telethon
 *.session
 *.session*
+
+# downloaded files
+incoming/
+outgoing/
