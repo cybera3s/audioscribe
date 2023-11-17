@@ -1,9 +1,12 @@
 import speech_recognition as sr
 
 from utils.format_converter import convert_to_wav_format
+from monitoring.main_logging import get_logger
+
+logger = get_logger(__name__)
 
 
-def voice_to_text(input_path, output_path, lang: str) -> str:
+def turn_voice_to_text(input_path, output_path, speach_lang: str) -> str:
     convert_to_wav_format(str(input_path), str(output_path))
 
     # Recognizing Voice
@@ -18,7 +21,7 @@ def voice_to_text(input_path, output_path, lang: str) -> str:
         transcript = recognizer.recognize_google(
             data,
             key=None,
-            language=lang,
+            language=speach_lang,
         )
     except Exception as e:
         return str(e)
