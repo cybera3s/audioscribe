@@ -62,4 +62,13 @@ LANG=speacking language
 ROOT_MEDIA=root media folder
 ```
 
+7- run the project
+```
+python run.py
+```
+
+enjoy!
+# Contact
+Email: cybera.3s@gmail.com<br>
+Telegram: <a href="https://t.me/ario_3s">ario3s</a>
 </p>
