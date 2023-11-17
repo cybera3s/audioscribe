@@ -2,66 +2,16 @@ from telethon import events
 from telethon.types import Message, User, Channel
 
 # from telethon import TelegramClient
-
-import ffmpeg
-import speech_recognition as sr
 from pathlib import Path
-import logging
 
-logging.basicConfig(
-    filemode="a",
-    filename="/home/ario/management/logs/audioscribe/audioscribe.out.log",
-)
-
-logger = logging.getLogger(__name__)
+from utils.voice_to_text import voice_to_text
+from config import settings
+from monitoring.main_logging import get_logger
 
 
-LANG: str = "fa"
-AUDIO_FOLDER = Path("")
+logger = get_logger("audioscribe")
 
-
-def convert_to(input, output) -> bool:
-    """
-    Converts input file to provided output format
-
-    Return:
-        True if has no err else False
-    """
-
-    stream = ffmpeg.input(input)
-    stream = ffmpeg.output(stream, output)
-    out, err = ffmpeg.run(stream)
-
-    if not err:
-        return True
-    return False
-
-
-def voice_to_text(input_path, output_path) -> str:
-    convert_to(str(input_path), str(output_path))
-
-    # Recognizing Voice
-    recognizer = sr.Recognizer()
-    audioFile = sr.AudioFile(str(output_path))
-
-    with audioFile as source:
-        data = recognizer.record(source)
-
-    # recognizing voice using Google API
-    try:
-        transcript = recognizer.recognize_google(
-            data,
-            key=None,
-            language=LANG,
-        )
-    except Exception as e:
-        return str(e)
-
-    # removing audio files
-    input_path.unlink()
-    output_path.unlink()
-
-    return transcript
+LANG: str = settings.lang
 
 
 @events.register(events.NewMessage(outgoing=True))
@@ -71,11 +21,10 @@ async def handle_outgoing_voices(event) -> None:
     """
 
     message: Message = event.message
-
-    input_voice = "saved_voice"
+    input_voice = "outgoing/saved_voice"
     input_path = Path(input_voice + ".oga")
 
-    output_voice = "voice_output.wav"
+    output_voice = "outgoing/voice_output.wav"
     output_path = Path(output_voice)
 
     # message is audio
@@ -86,7 +35,7 @@ async def handle_outgoing_voices(event) -> None:
         first_name = sender.first_name
         await message.download_media(input_voice)
 
-        transcript: str = voice_to_text(input_path, output_path)
+        transcript: str = voice_to_text(input_path, output_path, lang=LANG)
 
         edited_caption: str = f"**{first_name}**:\n" + transcript
         await message.edit(edited_caption)
