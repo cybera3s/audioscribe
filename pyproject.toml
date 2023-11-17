@@ -1,7 +1,7 @@
 [tool.poetry]
-name = "telethon_template"
+name = "audioscribe"
 version = "0.1.0"
-description = "telethon template"
+description = "audioscribe source code"
 authors = ["ario <cybera.3s@gmail.com>"]
 readme = "README.md"
 
