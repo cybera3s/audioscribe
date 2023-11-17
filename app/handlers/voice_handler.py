@@ -32,7 +32,6 @@ async def handle_outgoing_voices(event) -> None:
     # message is audio
     if message.media and message.file.mime_type.startswith("audio"):
         logger.info("outgoing voice sent")
-
         sender = await event.get_sender()
         first_name = sender.first_name
 
@@ -67,28 +66,28 @@ async def handle_incoming_voices(event) -> None:
         "in_voice.wav"
     )
 
-    # input_voice = "incoming/voice_output"
-    # input_path = Path(input_voice + ".oga")
-
-    # output_voice = "incoming/voice_output.wav"
-    # output_path = Path(output_voice)
-
     sender = await event.get_sender()
 
     # message is audio
     if message.media and message.file.mime_type.startswith("audio"):
+
+        logger.info("incoming voice message received")
+
+        # message has reactions
         if message.reactions.results:
+
+            # get first reacioned emoji
             reacted_emoji: str = message.reactions.results[0].reaction.emoticon
 
             if reacted_emoji == accepted_emoji:
                 first_name: str = "said"
 
-                # get sender if is user
+                # change first name base sender type
                 if isinstance(sender, User):
                     first_name: str | None = sender.first_name
                 elif isinstance(sender, Channel):
                     first_name: str = sender.title
-
+                
                 await message.download_media(incoming_input_voice)
 
                 transcript: str = turn_voice_to_text(
