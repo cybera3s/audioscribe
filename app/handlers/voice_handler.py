@@ -12,6 +12,11 @@ from monitoring.main_logging import get_logger
 logger = get_logger(__name__)
 
 
+def is_voice_message(message: Message) -> bool:
+    """True if message is voice message"""
+    return message.media and message.file.mime_type.startswith("audio")
+
+
 @events.register(events.NewMessage(outgoing=True))
 async def handle_outgoing_voices(event) -> None:
     """
@@ -26,11 +31,11 @@ async def handle_outgoing_voices(event) -> None:
         "out_voice.oga"
     )
     outgoing_output_voice: Path = settings.outgoing_voices_path.joinpath(
-        "out_voice.wav"
+        "out_voice"
     )
 
     # message is audio
-    if message.media and message.file.mime_type.startswith("audio"):
+    if is_voice_message(message):
         logger.info("outgoing voice sent")
         sender = await event.get_sender()
         first_name = sender.first_name
@@ -57,29 +62,27 @@ async def handle_incoming_voices(event) -> None:
 
     message: Message = event.message
 
-    accepted_emoji: str = "👍"
+    confirm_emoji: str = settings.CONFIRM_EMOJI
 
     incoming_input_voice: Path = settings.incoming_voices_path.joinpath(
         "in_voice.oga"
     )
     incoming_output_voice: Path = settings.incoming_voices_path.joinpath(
-        "in_voice.wav"
+        "in_voice"
     )
 
     sender = await event.get_sender()
 
     # message is audio
-    if message.media and message.file.mime_type.startswith("audio"):
-
+    if is_voice_message(message):
         logger.info("incoming voice message received")
 
         # message has reactions
         if message.reactions.results:
-
             # get first reacioned emoji
             reacted_emoji: str = message.reactions.results[0].reaction.emoticon
 
-            if reacted_emoji == accepted_emoji:
+            if reacted_emoji == confirm_emoji:
                 first_name: str = "said"
 
                 # change first name base sender type
@@ -87,7 +90,7 @@ async def handle_incoming_voices(event) -> None:
                     first_name: str | None = sender.first_name
                 elif isinstance(sender, Channel):
                     first_name: str = sender.title
-                
+
                 await message.download_media(incoming_input_voice)
 
                 transcript: str = turn_voice_to_text(
