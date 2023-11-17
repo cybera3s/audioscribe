@@ -1,11 +1,9 @@
 import speech_recognition as sr
 
-from format_converter import convert_to_wav_format
-
+from utils.format_converter import convert_to_wav_format
 
 
 def voice_to_text(input_path, output_path, lang: str) -> str:
-    
     convert_to_wav_format(str(input_path), str(output_path))
 
     # Recognizing Voice
