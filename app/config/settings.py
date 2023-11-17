@@ -17,5 +17,10 @@ api_hash = env.str("API_HASH")
 session_name = env.str("SESSION_NAME")
 
 
+# logging
+LOG_LEVEL = env.log_level("LOG_LEVEL")
+STDOUT_LOG_PATH = env.path("STDOUT_LOG_PATH")
+STDERR_LOG_PATH = env.path("STDERR_LOG_PATH")
+
 # Translation
 lang = env.str("LANG")

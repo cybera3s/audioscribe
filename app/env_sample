@@ -3,5 +3,10 @@ API_ID=api id from my.telegram.org
 API_HASH=api hash from my.telegram.org
 SESSION_NAME=session name
 
+# Logging
+STDOUT_LOG_PATH=stdout log path
+STDERR_LOG_PATH=stderr log path
+LOG_LEVEL=info
+
 # Translation
 LANG=speacking language
