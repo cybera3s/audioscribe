@@ -10,3 +10,5 @@ LOG_LEVEL=info
 
 # Translation
 LANG=speacking language
+
+ROOT_MEDIA=root media folder

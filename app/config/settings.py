@@ -23,4 +23,10 @@ STDOUT_LOG_PATH = env.path("STDOUT_LOG_PATH")
 STDERR_LOG_PATH = env.path("STDERR_LOG_PATH")
 
 # Translation
-lang = env.str("LANG")
+speach_lang = env.str("SPEACH_LANG")
+
+
+# media download folder
+root_media: Path = root_dir.joinpath(env.path("ROOT_MEDIA"))
+outgoing_voices_path: Path = root_media.joinpath("outgoing")
+incoming_voices_path: Path = root_media.joinpath("incoming")
