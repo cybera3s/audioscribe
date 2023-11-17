@@ -67,6 +67,13 @@ ROOT_MEDIA=root media folder
 python run.py
 ```
 
+### Outgoing voice messages
+extracted text will be appended to the message as a caption
+
+### Incoming voice messages
+send a Like "👍" reaction to the incoming message, 
+the extracted text will be sent as its reply
+
 enjoy!
 # Contact
 Email: cybera.3s@gmail.com<br>
